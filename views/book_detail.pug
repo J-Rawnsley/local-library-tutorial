@@ -2,5 +2,32 @@ extends layout
 
 block content 
 
-    p page under construction: book detail for "#{book.title}
-        |"
+    h1 Title: #{book.title} 
+    p #[strong Author: ] 
+        a(href=book.author.url) #{book.author.name} 
+    p #[strong Summary:] #{book.summary}
+    p #[strong ISBN:] #{book.isbn}
+    p #[strong Genre: ]
+        each val, index in book.genre
+            a(href=val.url) #{val.name}
+            if index < book.genre.length - 1
+                |,&nbsp;
+
+    div(style="margin-top:20px;margin-left:20px")
+        h4 Copies
+        each copy in book_instances 
+            hr
+            if copy.status == "Available"
+                p(class="text-success") #{copy.status}
+            else if copy.status == "Maintenance"
+                p.text-warning #{copy.status}
+            else
+                p.text-danger #{copy.status}
+            p #[strong Imprint:] #{copy.imprint} 
+            if copy.status != "Available"
+                p #[strong Due back: ] #{copy.due_back_formatted}
+            p #[strong ID: ] 
+                a(href=copy.url) #{copy.id}
+        
+        else
+            p There are no copies of this book in the library.
