@@ -20,9 +20,9 @@ block content
             if copy.status == "Available"
                 p(class="text-success") #{copy.status}
             else if copy.status == "Maintenance"
-                p.text-warning #{copy.status}
-            else
                 p.text-danger #{copy.status}
+            else
+                p.text-warning #{copy.status}
             p #[strong Imprint:] #{copy.imprint} 
             if copy.status != "Available"
                 p #[strong Due back: ] #{copy.due_back_formatted}

@@ -1,5 +1,6 @@
 const BookInstance = require("../models/bookinstance");
 const asyncHandler = require("express-async-handler");
+const { book_detail } = require("./bookController");
 
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
   const allBookInstances = await BookInstance.find().populate("book").exec();
@@ -11,7 +12,21 @@ exports.bookinstance_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: BookInstance detail: ${req.params.id}`);
+  const bookInstance = await BookInstance.findById(req.params.id)
+    .populate("book")
+    .exec();
+
+  if (bookInstance === null) {
+    const err = new Error("Book copy not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("bookinstance_detail", {
+    title: "Book:",
+    bookInstance: bookInstance,
+    book: bookInstance.book,
+  });
 });
 
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
