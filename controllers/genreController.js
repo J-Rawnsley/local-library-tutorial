@@ -73,7 +73,8 @@ exports.genre_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.genre_update_get = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Genre update GET');
+  const genre = await Genre.findById(req.params.id).exec()
+  res.render('genre_form', { title: 'Update Genre', genre: genre});
 });
 
 exports.genre_update_post = asyncHandler(async (req, res, next) => {

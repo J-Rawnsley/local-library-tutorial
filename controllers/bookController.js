@@ -99,7 +99,6 @@ exports.book_create_post = [
 		.escape(),
 	body('isbn', 'ISBN must not be empty.').trim().isLength({ min: 1 }).escape(),
 	body('genre.*').escape(),
-
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 
@@ -211,7 +210,7 @@ exports.book_update_post = [
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
-	body('summary', 'summary must not be empty.')
+	body('summary', 'Summary must not be empty.')
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
