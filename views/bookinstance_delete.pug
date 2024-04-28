@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+
+    h1 #{title}
+
+    p book instance ID: #{bookInstance._id}
+
+    p Are you sure you want to delete this copy of #[strong #{bookInstance.book.title}]?
+
+    form(method="POST")
+        div.form-group
+            input#book-instance-id.form-control(type="hidden" name=book-instance-id value=bookInstance._id)
+            button.btn.btn-danger(type="submit" style="margin: 5px;") Delete 
+            a.btn.btn-primary(href="/catalog/bookinstance/" + bookInstance._id style="margin: 5px;") Cancel
+
