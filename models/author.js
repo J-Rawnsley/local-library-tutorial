@@ -30,4 +30,12 @@ AuthorSchema.virtual("formatted_ddeath").get(function () {
   return this.date_of_death ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED) : ""
 })
 
+AuthorSchema.virtual("dbirth_8").get(function() {
+  return this.date_of_birth ? this.date_of_birth.toISOString().split("T")[0] : ""
+} )
+
+AuthorSchema.virtual("ddeath_8").get(function() {
+  return this.date_of_death ? this.date_of_death.toISOString().split("T")[0] : ""
+} )
+
 module.exports = mongoose.model("Author", AuthorSchema);
