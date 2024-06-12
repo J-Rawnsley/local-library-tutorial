@@ -175,6 +175,8 @@ exports.book_update_get = asyncHandler(async (req, res, next) => {
 		Author.find().sort({ family_name: 1 }).exec(),
 		Genre.find().sort({ name: 1 }).exec(),
 	]);
+	
+	
 
 	if (book === null) {
 		const err = new Error('Book not found');

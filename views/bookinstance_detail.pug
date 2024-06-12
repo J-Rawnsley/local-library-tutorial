@@ -2,7 +2,8 @@ extends layout
 
 block content 
 
-    h1 ID: #{bookInstance._id} 
+    h1 Book Instance Information
+    h4 ID: #{bookInstance._id} 
 
     p #[strong Title: ] 
         a(href=book.url) #{book.title}
@@ -23,3 +24,5 @@ block content
 
     p 
         a(href= bookInstance.url + "/delete") Delete this book instance
+    p
+        a(href=bookInstance.url+"/update") Update this book instance

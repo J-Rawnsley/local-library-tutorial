@@ -106,7 +106,18 @@ exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED: BookInstance update GET');
+	const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec()
+	const bookinstance = await BookInstance.findById(req.params.id).populate("book")
+
+	console.log("id =", req.params.id)
+	console.log(bookinstance)
+
+	res.render("bookinstance_form", {
+		title: "Update Book Instance",
+		book_list: allBooks,
+		selected_book: bookinstance.book._id.toString(),
+		bookinstance: bookinstance,
+	});
 });
 
 exports.bookinstance_update_post = asyncHandler(async (req, res, next) => {
