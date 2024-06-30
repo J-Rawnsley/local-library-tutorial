@@ -3,8 +3,9 @@ extends layout
 block content 
 
     h1= title
-    h4 ID: #{bookinstance._id}
-
+    if bookinstance 
+        h4 ID: #{bookinstance._id}
+    
     form(method="POST")
 
         div.form-group 
