@@ -29,8 +29,8 @@ block content
         div.form-group 
             label(for="status") Status: 
             select#status.form-control(name="status" required)
-                option(value="") -- Please select a status --   
-                each val in ["Maintenance", "Available", "Loaned", "Reserved"]
+                option(value="Available") Available
+                each val in ["Maintenance", "Loaned", "Reserved"]
                     if undefined === bookinstance || bookinstance.status!=val 
                         option(value=val) #{val}
                     else 

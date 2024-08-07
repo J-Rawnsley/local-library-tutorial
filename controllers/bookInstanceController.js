@@ -38,13 +38,14 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
 	const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec();
 
-	console.log(req.params._id)
+	console.log("selected book id:", req.params.id)
 
 	res.render('bookinstance_form', {
 		title: 'Add Book Instance',
 		book_list: allBooks,
 		selected_book: req.params.id
 	});
+
 });
 
 exports.bookinstance_create_post = [
@@ -59,6 +60,7 @@ exports.bookinstance_create_post = [
 		.isISO8601()
 		.toDate(),
 	asyncHandler(async (req, res, next) => {
+		console.log("hello")
 		const errors = validationResult(req);
 		console.log(req.body);
 		console.log(validationResult(req));

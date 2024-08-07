@@ -81,6 +81,11 @@ router.post(
   bookinstance_controller.bookinstance_create_post
 );
 
+router.post(
+  "/bookinstance/create/:id",
+  bookinstance_controller.bookinstance_create_post
+);
+
 router.get(
   "/bookinstance/:id/delete",
   bookinstance_controller.bookinstance_delete_get
