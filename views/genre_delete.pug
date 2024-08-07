@@ -1,0 +1,23 @@
+extends layout 
+
+block content 
+
+    h1 #{title}: #{genre.name}
+
+    if genre_books.length > 0
+        p #[strong You must delete or update the following books before deleting the "#{genre.name}" genre:]
+            ul
+                for book in genre_books
+                    li 
+                        a(href="/catalog/book/" + book.id) #{book.title} by #{book.author.first_name} #{book.author.family_name}
+
+    else 
+
+        p Are you sure you want to delete the "#{genre.name}" genre?
+
+        form(method="POST")
+            div.form-group
+                input#genreId.form-control(type="hidden" name="genreId" value=genre.id)
+                button.btn.btn-danger(type="submit") Delete
+                a.btn.btn-primary(href="/catalog/genre/" + genre._id style="margin: 5px;") Cancel
+
