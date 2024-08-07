@@ -1,3 +1,5 @@
+// NOTE: THERE IS AN ISSUE WHEN ACCESSING THE BOOKINSTANCE CREATE FORM VIA THE LINK ON THE BOOK PAGE - when submitting the request, it gives a 404 error. LOOK INTO THIS?
+
 const BookInstance = require('../models/bookinstance');
 const Book = require('../models/book');
 
@@ -67,6 +69,7 @@ exports.bookinstance_create_post = [
 			status: req.body.status,
 			due_back: req.body.due_back,
 		});
+		console.log(bookInstance)
 
 		if (!errors.isEmpty()) {
 			console.log('re-redering form...');
@@ -123,6 +126,45 @@ exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.bookinstance_update_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED: BookInstance update POST');
-});
+exports.bookinstance_update_post = [
+	body('book', 'Book must be specified').trim().isLength({ min: 1 }).escape(),
+	body('imprint', 'Imprint must be at least 3 characters')
+		.trim()
+		.isLength({ min: 3 })
+		.escape(),
+	body('status').escape(),
+	body('due_back', 'Invalid date')
+		.optional({ values: 'falsy' })
+		.isISO8601()
+		.toDate(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		console.log(req.body);
+		console.log(validationResult(req));
+
+		const bookInstance = new BookInstance({
+			book: req.body.book,
+			imprint: req.body.imprint,
+			status: req.body.status,
+			due_back: req.body.due_back,
+			_id: req.params.id,
+		});
+
+		if (!errors.isEmpty()) {
+			console.log('re-redering form...');
+			const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec();
+
+			res.render('bookinstance_form', {
+				title: 'Update Book Instance',
+				book_list: allBooks,
+				selected_book: bookInstance.book._id,
+				errors: errors.array(),
+				bookinstnce: bookInstance,
+			});
+			return;
+		} else {
+			const updatedBookInstance = await BookInstance.findByIdAndUpdate(req.params.id, bookInstance, {});
+			res.redirect(updatedBookInstance.url);
+		}
+	})
+];
