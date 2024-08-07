@@ -23,4 +23,5 @@ block content
         form(method="post")
             div.form-group
                 input#authorid.form-control(type="hidden" name="authorid", value=author.id)
-                button.btn.btn-primary(type="submit") Delete Author
+                button.btn.btn-danger(type="submit") Delete
+                a.btn.btn-primary(href="/catalog/author/" + author._id style="margin: 5px;") Cancel
