@@ -1,5 +1,3 @@
-// NOTE: THERE IS AN ISSUE WHEN ACCESSING THE BOOKINSTANCE CREATE FORM VIA THE LINK ON THE BOOK PAGE - when submitting the request, it gives a 404 error. LOOK INTO THIS?
-
 const BookInstance = require('../models/bookinstance');
 const Book = require('../models/book');
 
