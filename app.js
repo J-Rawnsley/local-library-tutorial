@@ -15,6 +15,11 @@ mongoose.set('strictQuery', false);
 const debug = require('debug')('main');
 const compression = require('compression');
 const helmet = require('helmet');
+const rateLimit = require("express-rate-limit")
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 100
+})
 
 const dev_db_url =
   'mongodb+srv://jhmjbr5:wrNv6npx7T@cluster0.1gqqbt9.mongodb.net/local_library?retryWrites=true&w=majority';
@@ -42,6 +47,7 @@ app.use(
     },
   })
 );
+app.use(limiter)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
