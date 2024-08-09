@@ -12,8 +12,8 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
-const debug =  require("debug")("main")
-
+const debug = require('debug')('main');
+const compression = require('compression');
 const dev_db_url =
   'mongodb+srv://jhmjbr5:wrNv6npx7T@cluster0.1gqqbt9.mongodb.net/local_library?retryWrites=true&w=majority';
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
