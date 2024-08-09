@@ -2,6 +2,7 @@ const Author = require('../models/author');
 const Book = require('../models/book');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const debug = require("debug")("local-library-tutorial:authorController")
 
 exports.author_list = asyncHandler(async (req, res, next) => {
 	const allAuthors = await Author.find({}).sort({ family_name: 1 }).exec();
@@ -117,8 +118,8 @@ exports.author_delete_post = asyncHandler(async (req, res, next) => {
 
 exports.author_update_get = asyncHandler(async (req, res, next) => {
 	const author = await Author.findById(req.params.id).exec();
-	console.log(author)
-	console.log(author.dbirth_8)
+	debug(author)
+	debug(author.dbirth_8)
 	
 	res.render("author_form", { title: 'Update Author', author: author });
 });

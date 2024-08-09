@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler');
 const { book_detail } = require('./bookController');
 const { body, validationResult } = require('express-validator');
 const { format } = require('morgan');
+const debug = require("debug")("local-library-tutorial:bookInstanceController")
 
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
 	const allBookInstances = await BookInstance.find().populate('book').exec();
@@ -36,7 +37,7 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
 	const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec();
 
-	console.log("selected book id:", req.params.id)
+	debug("selected book id:", req.params.id)
 
 	res.render('bookinstance_form', {
 		title: 'Add Book Instance',
@@ -58,10 +59,10 @@ exports.bookinstance_create_post = [
 		.isISO8601()
 		.toDate(),
 	asyncHandler(async (req, res, next) => {
-		console.log("hello")
+		debug("hello")
 		const errors = validationResult(req);
-		console.log(req.body);
-		console.log(validationResult(req));
+		debug(req.body);
+		debug(validationResult(req));
 
 		const bookInstance = new BookInstance({
 			book: req.body.book,
@@ -69,10 +70,10 @@ exports.bookinstance_create_post = [
 			status: req.body.status,
 			due_back: req.body.due_back,
 		});
-		console.log(bookInstance)
+		debug(bookInstance)
 
 		if (!errors.isEmpty()) {
-			console.log('re-redering form...');
+			debug('re-redering form...');
 			const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec();
 
 			res.render('bookinstance_form', {
@@ -106,7 +107,7 @@ exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
 		.populate('book')
 		.exec();
 	const book = bookInstance.book
-  console.log(req.body)
+  debug(req.body)
 	await BookInstance.findByIdAndDelete(req.params.id).exec();
 	res.redirect(book.url);
 });
@@ -115,8 +116,8 @@ exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
 	const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec()
 	const bookinstance = await BookInstance.findById(req.params.id).populate("book")
 
-	console.log("id =", req.params.id)
-	console.log(bookinstance)
+	debug("id =", req.params.id)
+	debug(bookinstance)
 
 	res.render("bookinstance_form", {
 		title: "Update Book Instance",
@@ -139,8 +140,8 @@ exports.bookinstance_update_post = [
 		.toDate(),
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
-		console.log(req.body);
-		console.log(validationResult(req));
+		debug(req.body);
+		debug(validationResult(req));
 
 		const bookInstance = new BookInstance({
 			book: req.body.book,
@@ -151,7 +152,7 @@ exports.bookinstance_update_post = [
 		});
 
 		if (!errors.isEmpty()) {
-			console.log('re-redering form...');
+			debug('re-redering form...');
 			const allBooks = await Book.find({}, 'title').sort({ title: 1 }).exec();
 
 			res.render('bookinstance_form', {

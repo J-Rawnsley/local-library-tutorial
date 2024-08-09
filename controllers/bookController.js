@@ -2,6 +2,7 @@ const Book = require('../models/book');
 const Author = require('../models/author');
 const Genre = require('../models/genre');
 const BookInstance = require('../models/bookinstance');
+const debug = require("debug")("local-library-tutorial:bookController")
 
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
@@ -74,8 +75,8 @@ exports.book_create_get = asyncHandler(async (req, res, next) => {
 
 exports.book_create_post = [
 	(req, res, next) => {
-		console.log('hello');
-		console.log(req.body);
+		debug('hello');
+		debug(req.body);
 		next();
 	},
 	(req, res, next) => {
@@ -150,7 +151,7 @@ exports.book_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.book_delete_post = asyncHandler(async (req, res, next) => {
-  console.log("book delete post")
+  debug("book delete post")
 	const [book, allBookInstances] = await Promise.all([
     Book.findById(req.params.id).exec(),
     BookInstance.find({ book: req.params.id}).exec(),
@@ -163,7 +164,7 @@ exports.book_delete_post = asyncHandler(async (req, res, next) => {
       instances: allBookInstances,
     })
   } else {
-    console.log("book has no instances so should delete")
+    debug("book has no instances so should delete")
     await Book.findByIdAndDelete(req.body.bookid);
     res.redirect("/catalog/books")
   }
@@ -187,7 +188,7 @@ exports.book_update_get = asyncHandler(async (req, res, next) => {
 	allGenres.forEach((genre) => {
 		if (book.genre.includes(genre._id)) genre.checked = 'true';
 	});
-	console.log(book.summary)
+	debug(book.summary)
 	res.render('book_form', {
 		title: 'Update Book',
 		authors: allAuthors,
