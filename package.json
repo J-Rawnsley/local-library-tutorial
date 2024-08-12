@@ -9,7 +9,7 @@
     "serverstart": "DEBUG=local-library-tutorial:* npm run devstart"
   },
   "engines": {
-    "node": ">=21.2.0"
+    "node": ">=16"
   },
   "dependencies": {
     "compression": "^1.7.4",
