@@ -22,7 +22,8 @@ const limiter = rateLimit({
 })
 
 const dev_db_url = require("./dev_secrets/dev_db_url")
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const prod_db_url = require("./dev_secrets/prod_db_url")
+const mongoDB = process.env.MONGODB_URI || prod_db_url;
 
 main().catch((err) => debug(err));
 async function main() {
