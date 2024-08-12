@@ -22,7 +22,7 @@ const limiter = rateLimit({
 })
 
 const dev_db_url =
-  'mongodb+srv://jhmjbr5:wrNv6npx7T@cluster0.1gqqbt9.mongodb.net/local_library?retryWrites=true&w=majority';
+  'mongodb+srv://jhmjbr5:qucdEeTBApt8@cluster0.1gqqbt9.mongodb.net/local_library?retryWrites=true&w=majority';
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => debug(err));
