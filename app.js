@@ -21,10 +21,18 @@ const limiter = rateLimit({
   limit: 100
 })
 
-// const dev_db_url = require("./dev_secrets/dev_db_url")
-// const prod_db_url = require("./dev_secrets/prod_db_url")
+// During development & when testing locally, use one of the connct strings stored in dev_secrets:
 
-const mongoDB = process.env.MONGODB_URI || prod_db_url;
+// for development database cluster
+// const mongoDB = require("./dev_secrets/dev_db_url")
+
+// to use production database cluster
+// const mongoDB = require("./dev_secrets/prod_db_url")
+
+// for production deployment use the following:
+const mongoDB = process.env.MONGODB_URI
+
+
 
 main().catch((err) => debug(err));
 async function main() {
