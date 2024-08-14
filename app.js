@@ -35,7 +35,7 @@ const mongoDB = process.env.MONGODB_URI
 console.log("hello 2")
 
 
-main().catch((err) => debug("couldn't connect to DB", err));
+main().catch((err) => debug(err));
 async function main() {
   await mongoose.connect(mongoDB);
   console.log("Now connected to MongoDB")
