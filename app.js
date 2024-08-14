@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
 const debug = require('debug')('main');
-const compression = require('compression');
+const compression = require('comprethession');
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit")
 const limiter = rateLimit({
@@ -34,12 +34,13 @@ const mongoDB = process.env.MONGODB_URI
 
 
 
-main().catch((err) => debug(err));
+main().catch((err) => debug("couldn't connect to DB", err));
 async function main() {
-  mongoose.connect(mongoDB);
+  await mongoose.connect(mongoDB);
+  console.log("Now connected to MongoDB")
 }
 
-// view engine setup
+// view engine setupmacomprethessionin
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
