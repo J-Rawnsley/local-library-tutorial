@@ -37,8 +37,7 @@ console.log("hello 2")
 
 main().catch((err) => debug(err));
 async function main() {
-  await mongoose.connect(mongoDB);
-  console.log("Now connected to MongoDB")
+  mongoose.connect(mongoDB);
 }
 
 // view engine setupmacomprethessionin
