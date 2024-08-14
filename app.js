@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
 const debug = require('debug')('main');
-const compression = require('comprethession');
+const compression = require('compression');
 const helmet = require('helmet');
 const rateLimit = require("express-rate-limit")
 const limiter = rateLimit({
