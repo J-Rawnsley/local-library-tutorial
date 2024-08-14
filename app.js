@@ -12,32 +12,35 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
-const debug = require('debug')('main');
+const debug = require('debug')('local-library-tutorial:app.js');
 const compression = require('compression');
 const helmet = require('helmet');
-const rateLimit = require("express-rate-limit")
+const rateLimit = require('express-rate-limit');
 const limiter = rateLimit({
-  windowMs: 60 * 1000,
-  limit: 100
-})
+	windowMs: 60 * 1000,
+	limit: 100,
+});
 
 // During development & when testing locally, use one of the connct strings stored in dev_secrets:
 
 // for development database cluster
-// const mongoDB = require("./dev_secrets/dev_db_url")
+// const mongoDB = require('./dev_secrets/dev_db_url');
 
 // to use production database cluster
 // const mongoDB = require("./dev_secrets/prod_db_url")
 
+//for connecting to Railway database
+// const mongoDB = require('./dev_secrets/railway_db_url');
+
 // for production deployment use the following:
-console.log("hello 1")
 const mongoDB = process.env.MONGODB_URI
-console.log("hello 2")
 
-
-main().catch((err) => debug(err));
+main().catch((err) => debug("couldn't connect to DB!!", err));
 async function main() {
-  mongoose.connect(mongoDB);
+	await mongoose.connect(mongoDB, {
+		serverSelectionTimeoutMS: 5000,
+	});
+	debug('connected!!');
 }
 
 // view engine setupmacomprethessionin
@@ -51,13 +54,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression());
 app.use(
-  helmet({
-    directives: {
-      'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net'],
-    },
-  })
+	helmet({
+		directives: {
+			'script-src': ["'self'", 'code.jquery.com', 'cdn.jsdelivr.net'],
+		},
+	})
 );
-app.use(limiter)
+app.use(limiter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -65,18 +68,18 @@ app.use('/catalog', catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+	next(createError(404));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
 });
 
 module.exports = app;
