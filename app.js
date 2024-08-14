@@ -30,8 +30,9 @@ const limiter = rateLimit({
 // const mongoDB = require("./dev_secrets/prod_db_url")
 
 // for production deployment use the following:
+console.log("hello 1")
 const mongoDB = process.env.MONGODB_URI
-
+console.log("hello 2")
 
 
 main().catch((err) => debug("couldn't connect to DB", err));
