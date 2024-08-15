@@ -1,4 +1,4 @@
-Welcome to Local Library, a basic Express website developed as a tutorial example on the Mozilla Developer
+Welcome to Local Library, a basic Express website developed as a tutorial example on the Mozilla Developer Network
 
 ## TECH STACK
 
