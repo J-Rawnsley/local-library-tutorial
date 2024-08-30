@@ -9,7 +9,7 @@ Welcome to Local Library, a basic Express website developed as a tutorial exampl
 - **Pug (for templating)**
 - **Bootstrap (for styling)**
 
-## PROJECT STRUCTURE**
+## PROJECT STRUCTURE
 
 - **bin/www**: Sets up and starts the HTTP server for the Express application, handling errors and logging server status
 - **app.js**: Configures and initializes the Express application, including middleware, routing, and database connection
